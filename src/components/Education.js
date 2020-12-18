@@ -5,30 +5,93 @@ class Education extends Component {
   constructor() {
     super();
     this.state = {
-      school: [],
-      title: [],
-      beginDate: [],
-      endDate: [],
+      school: "",
+      title: "",
+      beginDate: "",
+      endDate: "",
+      saved: [],
       educations: [],
+      forms: [],
     };
   }
 
+  handleChange = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  reset = () => {
+    this.setState({
+      school: "",
+      title: "",
+      beginDate: "",
+      endDate: "",
+      forms: [],
+    });
+    this.createEducation();
+  };
+
+  createEducation = () => {
+    this.setState({
+      educations: this.state.saved.map((element) => {
+        return (
+          <div key={uniqid()} className="edu">
+            <p>School name: {element.school}</p>
+            <p>Study: {element.title}</p>
+            <p>Begin date: {element.beginDate}</p>
+            <p>Ending date: {element.endDate}</p>
+            <button>Edit</button>
+          </div>
+        );
+      }),
+    });
+  };
+
   submitForm = (e) => {
     e.preventDefault();
-    console.log(e);
+    let obj = {};
+    obj.school = this.state.school;
+    obj.title = this.state.title;
+    obj.beginDate = this.state.beginDate;
+    obj.endDate = this.state.endDate;
+    this.setState({
+      saved: [...this.state.saved, obj],
+    });
+    this.reset();
   };
 
   createForm = () => {
     return (
-      <form id="new" key={uniqid()} onSubmit={this.submitForm}>
-        <input type="text" name="schoolname" placeholder="School Name"></input>
-        <input type="text" name="study" placeholder="Study"></input>
+      <form className="new" key={uniqid()} onSubmit={this.submitForm}>
         <input
+          onChange={this.handleChange}
           type="text"
-          name="begindate"
+          name="school"
+          placeholder="School Name"
+        ></input>
+        <input
+          onChange={this.handleChange}
+          type="text"
+          name="title"
+          placeholder="Study"
+        ></input>
+        <input
+          onChange={this.handleChange}
+          type="date"
+          name="beginDate"
           placeholder="Beginning Date"
         ></input>
-        <input type="text" name="enddate" placeholder="Ending Date"></input>
+        <input
+          onChange={this.handleChange}
+          type="date"
+          name="endDate"
+          placeholder="Ending Date"
+        ></input>
         <button type="submit">Submit</button>
       </form>
     );
@@ -36,7 +99,7 @@ class Education extends Component {
 
   addForm = () => {
     this.setState({
-      educations: [...this.state.educations, this.createForm()],
+      forms: [this.createForm()],
     });
   };
 
@@ -44,10 +107,11 @@ class Education extends Component {
     return (
       <div id="education" className="component">
         <h2>Education experience</h2>
+        {this.state.educations}
         <button id="add" onClick={this.addForm}>
           Add
         </button>
-        {this.state.educations}
+        {this.state.forms}
       </div>
     );
   }
