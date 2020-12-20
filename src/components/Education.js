@@ -25,33 +25,6 @@ class Education extends Component {
     });
   };
 
-  reset = () => {
-    this.setState({
-      school: "",
-      title: "",
-      beginDate: "",
-      endDate: "",
-      forms: [],
-    });
-    this.createEducation();
-  };
-
-  createEducation = () => {
-    this.setState({
-      educations: this.state.saved.map((element) => {
-        return (
-          <div key={uniqid()} className="edu">
-            <p>School name: {element.school}</p>
-            <p>Study: {element.title}</p>
-            <p>Begin date: {element.beginDate}</p>
-            <p>Ending date: {element.endDate}</p>
-            <button>Edit</button>
-          </div>
-        );
-      }),
-    });
-  };
-
   submitForm = (e) => {
     e.preventDefault();
     let obj = {};
@@ -59,10 +32,27 @@ class Education extends Component {
     obj.title = this.state.title;
     obj.beginDate = this.state.beginDate;
     obj.endDate = this.state.endDate;
+    let array = [...this.state.saved, obj];
     this.setState({
       saved: [...this.state.saved, obj],
+      school: "",
+      title: "",
+      beginDate: "",
+      endDate: "",
+      forms: [],
+      educations: array.map((element) => {
+        return (
+          <div key={uniqid()} className="edu">
+            <p>School name: {element.school}</p>
+            <p>Study: {element.title}</p>
+            <p>Begin date: {element.beginDate}</p>
+            <p>Ending date: {element.endDate}</p>
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+        );
+      }),
     });
-    this.reset();
   };
 
   createForm = () => {
@@ -104,6 +94,7 @@ class Education extends Component {
   };
 
   render() {
+    console.log(this.state.saved);
     return (
       <div id="education" className="component">
         <h2>Education experience</h2>
