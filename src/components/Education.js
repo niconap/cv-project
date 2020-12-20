@@ -12,6 +12,7 @@ class Education extends Component {
       saved: [],
       educations: [],
       forms: [],
+      editindex: 0,
     };
   }
 
@@ -23,6 +24,82 @@ class Education extends Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  submitEdit = (e) => {
+    e.preventDefault();
+    let obj = {};
+    obj.school = this.state.school;
+    obj.title = this.state.title;
+    obj.beginDate = this.state.beginDate;
+    obj.endDate = this.state.endDate;
+    let array = [this.state.saved];
+    array.splice(this.state.editindex, 1, obj);
+    this.setState({
+      saved: array,
+      school: "",
+      title: "",
+      beginDate: "",
+      endDate: "",
+      forms: [],
+      educations: array.map((element) => {
+        let index = array.indexOf(element);
+        return (
+          <div key={uniqid()} className="edu">
+            <p>School name: {element.school}</p>
+            <p>Study: {element.title}</p>
+            <p>Begin date: {element.beginDate}</p>
+            <p>Ending date: {element.endDate}</p>
+            <button
+              onClick={() =>
+                this.setState({
+                  forms: this.editEducation(index),
+                })
+              }
+            >
+              Edit
+            </button>
+            <button>Delete</button>
+          </div>
+        );
+      }),
+    });
+  };
+
+  editEducation = (index, obj) => {
+    this.setState({
+      editindex: index,
+    });
+    return (
+      <form className="new" key={uniqid()} onSubmit={this.submitEdit}>
+        <h3>Edit Education</h3>
+        <input
+          onChange={this.handleChange}
+          type="text"
+          name="school"
+          placeholder="School Name"
+        ></input>
+        <input
+          onChange={this.handleChange}
+          type="text"
+          name="title"
+          placeholder="Study"
+        ></input>
+        <input
+          onChange={this.handleChange}
+          type="date"
+          name="beginDate"
+          placeholder="Beginning Date"
+        ></input>
+        <input
+          onChange={this.handleChange}
+          type="date"
+          name="endDate"
+          placeholder="Ending Date"
+        ></input>
+        <button type="submit">Submit</button>
+      </form>
+    );
   };
 
   submitForm = (e) => {
@@ -41,13 +118,22 @@ class Education extends Component {
       endDate: "",
       forms: [],
       educations: array.map((element) => {
+        let index = array.indexOf(element);
         return (
           <div key={uniqid()} className="edu">
             <p>School name: {element.school}</p>
             <p>Study: {element.title}</p>
             <p>Begin date: {element.beginDate}</p>
             <p>Ending date: {element.endDate}</p>
-            <button>Edit</button>
+            <button
+              onClick={() =>
+                this.setState({
+                  forms: this.editEducation(index, element),
+                })
+              }
+            >
+              Edit
+            </button>
             <button>Delete</button>
           </div>
         );
@@ -94,15 +180,14 @@ class Education extends Component {
   };
 
   render() {
-    console.log(this.state.saved);
     return (
       <div id="education" className="component">
         <h2>Education experience</h2>
         {this.state.educations}
+        {this.state.forms}
         <button id="add" onClick={this.addForm}>
           Add
         </button>
-        {this.state.forms}
       </div>
     );
   }
