@@ -68,11 +68,21 @@ class Practical extends Component {
           let index = array.indexOf(element);
           return (
             <div key={uniqid()} className="job">
-              <p>Company name: {element.company}</p>
-              <p>Position: {element.position}</p>
-              <p>Description: {element.description}</p>
-              <p>Starting year: {element.beginYear}</p>
-              <p>Ending Year: {element.endYear}</p>
+              <p>
+                <u>Company name</u>: {element.company}
+              </p>
+              <p>
+                <u>Position</u>: {element.position}
+              </p>
+              <p>
+                <u>Description</u>: {element.description}
+              </p>
+              <p>
+                <u>Starting year</u>: {element.beginYear}
+              </p>
+              <p>
+                <u>Ending Year</u>: {element.endYear}
+              </p>
               <button
                 onClick={() =>
                   this.setState({
@@ -139,11 +149,21 @@ class Practical extends Component {
           let index = array.indexOf(element);
           return (
             <div key={uniqid()} className="job">
-              <p>Company name: {element.company}</p>
-              <p>Position: {element.position}</p>
-              <p>Description: {element.description}</p>
-              <p>Starting year: {element.beginYear}</p>
-              <p>Ending Year: {element.endYear}</p>
+              <p>
+                <u>Company name</u>: {element.company}
+              </p>
+              <p>
+                <u>Position</u>: {element.position}
+              </p>
+              <p>
+                <u>Description</u>: {element.description}
+              </p>
+              <p>
+                <u>Starting year</u>: {element.beginYear}
+              </p>
+              <p>
+                <u>Ending Year</u>: {element.endYear}
+              </p>
               <button
                 onClick={() =>
                   this.setState({
@@ -277,10 +297,10 @@ class Practical extends Component {
       <div id="practical" className="component">
         <h2>Practical information</h2>
         {this.state.jobs}
+        {this.state.forms}
         <button id="add" onClick={this.addForm}>
           +
         </button>
-        {this.state.forms}
       </div>
     );
   }

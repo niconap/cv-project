@@ -47,10 +47,18 @@ class Education extends Component {
           let index = array.indexOf(element);
           return (
             <div key={uniqid()} className="edu">
-              <p>School name: {element.school}</p>
-              <p>Study: {element.title}</p>
-              <p>Begin date: {element.beginDate}</p>
-              <p>Ending date: {element.endDate}</p>
+              <p>
+                <u>School name</u>: {element.school}
+              </p>
+              <p>
+                <u>Study</u>: {element.title}
+              </p>
+              <p>
+                <u>Begin date</u>: {element.beginDate}
+              </p>
+              <p>
+                <u>Ending date</u>: {element.endDate}
+              </p>
               <button
                 onClick={() =>
                   this.setState({
@@ -148,10 +156,18 @@ class Education extends Component {
           let index = array.indexOf(element);
           return (
             <div key={uniqid()} className="edu">
-              <p>School name: {element.school}</p>
-              <p>Study: {element.title}</p>
-              <p>Begin date: {element.beginDate}</p>
-              <p>Ending date: {element.endDate}</p>
+              <p>
+                <u>School name</u>: {element.school}
+              </p>
+              <p>
+                <u>Study</u>: {element.title}
+              </p>
+              <p>
+                <u>Begin date</u>: {element.beginDate}
+              </p>
+              <p>
+                <u>Ending date</u>: {element.endDate}
+              </p>
               <button
                 onClick={() =>
                   this.setState({

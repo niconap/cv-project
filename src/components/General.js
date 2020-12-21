@@ -7,6 +7,7 @@ class General extends Component {
       name: "",
       email: "",
       number: "",
+      summary: "",
       submit: 0,
     };
   }
@@ -78,6 +79,13 @@ class General extends Component {
               id="number"
               placeholder="Phone Number"
             ></input>
+            <textarea
+              name="summary"
+              onChange={this.handleChange}
+              value={this.state.summary}
+              id="summary"
+              placeholder="About yourself"
+            ></textarea>
             <button type="submit">Submit</button>
           </form>
         </div>
@@ -86,9 +94,16 @@ class General extends Component {
       return (
         <div id="general" className="component">
           <h2>General information</h2>
-          <p>Name: {this.state.name}</p>
-          <p>E-Mail: {this.state.email}</p>
-          <p>Phone number: {this.state.number}</p>
+          <p>
+            <u>Name</u>: {this.state.name}
+          </p>
+          <p>
+            <u>E-Mail</u>: {this.state.email}
+          </p>
+          <p>
+            <u>Phone number</u>: {this.state.number}
+          </p>
+          <p id="summary">{this.state.summary}</p>
           <button onClick={this.editButton} id="edit">
             Edit
           </button>

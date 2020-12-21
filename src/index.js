@@ -10,9 +10,11 @@ ReactDOM.render(
     <header>
       <h1>CV-creator</h1>
     </header>
-    <General />
-    <Education />
-    <Practical />
+    <div id="content">
+      <General />
+      <Education />
+      <Practical />
+    </div>
   </React.StrictMode>,
   document.getElementById("root")
 );
