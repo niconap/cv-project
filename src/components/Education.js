@@ -28,45 +28,67 @@ class Education extends Component {
 
   submitEdit = (e) => {
     e.preventDefault();
-    let obj = {};
-    obj.school = this.state.school;
-    obj.title = this.state.title;
-    obj.beginDate = this.state.beginDate;
-    obj.endDate = this.state.endDate;
-    let array = [this.state.saved];
-    array.splice(this.state.editindex, 1, obj);
-    this.setState({
-      saved: array,
-      school: "",
-      title: "",
-      beginDate: "",
-      endDate: "",
-      forms: [],
-      educations: array.map((element) => {
-        let index = array.indexOf(element);
-        return (
-          <div key={uniqid()} className="edu">
-            <p>School name: {element.school}</p>
-            <p>Study: {element.title}</p>
-            <p>Begin date: {element.beginDate}</p>
-            <p>Ending date: {element.endDate}</p>
-            <button
-              onClick={() =>
-                this.setState({
-                  forms: this.editEducation(index),
-                })
-              }
-            >
-              Edit
-            </button>
-            <button>Delete</button>
-          </div>
-        );
-      }),
-    });
+    if (this.checkInput()) {
+      let obj = {};
+      obj.school = this.state.school;
+      obj.title = this.state.title;
+      obj.beginDate = this.state.beginDate;
+      obj.endDate = this.state.endDate;
+      let array = [this.state.saved];
+      array.splice(this.state.editindex, 1, obj);
+      this.setState({
+        saved: array,
+        school: "",
+        title: "",
+        beginDate: "",
+        endDate: "",
+        forms: [],
+        educations: array.map((element) => {
+          let index = array.indexOf(element);
+          return (
+            <div key={uniqid()} className="edu">
+              <p>School name: {element.school}</p>
+              <p>Study: {element.title}</p>
+              <p>Begin date: {element.beginDate}</p>
+              <p>Ending date: {element.endDate}</p>
+              <button
+                onClick={() =>
+                  this.setState({
+                    forms: this.editEducation(index),
+                  })
+                }
+              >
+                Edit
+              </button>
+              <button>Delete</button>
+            </div>
+          );
+        }),
+      });
+    } else {
+      return;
+    }
   };
 
-  editEducation = (index, obj) => {
+  empty = () => {
+    return <p></p>;
+  };
+
+  deleteEducation = (index) => {
+    if (this.state.educations.length !== 1) {
+      this.setState({
+        saved: this.state.saved.splice(index, 1),
+        educations: this.state.educations.splice(index, 1),
+      });
+    } else {
+      this.setState({
+        saved: [],
+        educations: this.empty(),
+      });
+    }
+  };
+
+  editEducation = (index) => {
     this.setState({
       editindex: index,
     });
@@ -77,24 +99,28 @@ class Education extends Component {
           onChange={this.handleChange}
           type="text"
           name="school"
+          id="school"
           placeholder="School Name"
         ></input>
         <input
           onChange={this.handleChange}
           type="text"
           name="title"
+          id="title"
           placeholder="Study"
         ></input>
         <input
           onChange={this.handleChange}
           type="date"
           name="beginDate"
+          id="beginDate"
           placeholder="Beginning Date"
         ></input>
         <input
           onChange={this.handleChange}
           type="date"
           name="endDate"
+          id="endDate"
           placeholder="Ending Date"
         ></input>
         <button type="submit">Submit</button>
@@ -104,68 +130,100 @@ class Education extends Component {
 
   submitForm = (e) => {
     e.preventDefault();
-    let obj = {};
-    obj.school = this.state.school;
-    obj.title = this.state.title;
-    obj.beginDate = this.state.beginDate;
-    obj.endDate = this.state.endDate;
-    let array = [...this.state.saved, obj];
-    this.setState({
-      saved: [...this.state.saved, obj],
-      school: "",
-      title: "",
-      beginDate: "",
-      endDate: "",
-      forms: [],
-      educations: array.map((element) => {
-        let index = array.indexOf(element);
-        return (
-          <div key={uniqid()} className="edu">
-            <p>School name: {element.school}</p>
-            <p>Study: {element.title}</p>
-            <p>Begin date: {element.beginDate}</p>
-            <p>Ending date: {element.endDate}</p>
-            <button
-              onClick={() =>
-                this.setState({
-                  forms: this.editEducation(index, element),
-                })
-              }
-            >
-              Edit
-            </button>
-            <button>Delete</button>
-          </div>
-        );
-      }),
-    });
+    if (this.checkInput()) {
+      let obj = {};
+      obj.school = this.state.school;
+      obj.title = this.state.title;
+      obj.beginDate = this.state.beginDate;
+      obj.endDate = this.state.endDate;
+      let array = [...this.state.saved, obj];
+      this.setState({
+        saved: [...this.state.saved, obj],
+        school: "",
+        title: "",
+        beginDate: "",
+        endDate: "",
+        forms: [],
+        educations: array.map((element) => {
+          let index = array.indexOf(element);
+          return (
+            <div key={uniqid()} className="edu">
+              <p>School name: {element.school}</p>
+              <p>Study: {element.title}</p>
+              <p>Begin date: {element.beginDate}</p>
+              <p>Ending date: {element.endDate}</p>
+              <button
+                onClick={() =>
+                  this.setState({
+                    forms: this.editEducation(index),
+                  })
+                }
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => {
+                  this.deleteEducation(index);
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          );
+        }),
+      });
+    } else {
+      return;
+    }
   };
+
+  checkInput() {
+    const schoolInput = document.getElementById("school");
+    const titleInput = document.getElementById("title");
+    const beginDateInput = document.getElementById("beginDate");
+    const endDateInput = document.getElementById("endDate");
+    if (
+      schoolInput.value.length === 0 ||
+      titleInput.value.length === 0 ||
+      beginDateInput.value.length === 0 ||
+      endDateInput.value.length === 0
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   createForm = () => {
     return (
       <form className="new" key={uniqid()} onSubmit={this.submitForm}>
+        <h3>Add new education</h3>
         <input
           onChange={this.handleChange}
           type="text"
           name="school"
+          id="school"
           placeholder="School Name"
         ></input>
         <input
           onChange={this.handleChange}
           type="text"
           name="title"
+          id="title"
           placeholder="Study"
         ></input>
         <input
           onChange={this.handleChange}
           type="date"
           name="beginDate"
+          id="beginDate"
           placeholder="Beginning Date"
         ></input>
         <input
           onChange={this.handleChange}
           type="date"
           name="endDate"
+          id="endDate"
           placeholder="Ending Date"
         ></input>
         <button type="submit">Submit</button>
@@ -186,7 +244,7 @@ class Education extends Component {
         {this.state.educations}
         {this.state.forms}
         <button id="add" onClick={this.addForm}>
-          Add
+          +
         </button>
       </div>
     );
