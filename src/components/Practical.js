@@ -112,7 +112,8 @@ class Practical extends Component {
     return <p></p>;
   };
 
-  deleteJob = (index) => {
+  deleteJob = (element) => {
+    let index = this.state.jobs.indexOf(element);
     if (this.state.jobs.length !== 1) {
       this.setState({
         saved: this.state.saved.splice(index, 1),
@@ -135,8 +136,12 @@ class Practical extends Component {
       obj.description = this.state.description;
       obj.beginYear = this.state.beginYear;
       obj.endYear = this.state.endYear;
-      let array = [this.state.saved];
-      array.splice(this.state.editindex, 1, obj);
+      let array = this.state.saved;
+      console.log(this.state.saved, array);
+      let index = array.indexOf(this.state.editindex);
+      console.log(array, index);
+      array.splice(index, 1, obj);
+      console.log(array);
       this.setState({
         saved: array,
         company: "",
@@ -146,7 +151,6 @@ class Practical extends Component {
         endYear: "",
         forms: [],
         jobs: array.map((element) => {
-          let index = array.indexOf(element);
           return (
             <div key={uniqid()} className="job">
               <p>
@@ -167,7 +171,7 @@ class Practical extends Component {
               <button
                 onClick={() =>
                   this.setState({
-                    forms: this.editJob(index),
+                    forms: this.editJob(element),
                   })
                 }
               >
@@ -175,7 +179,7 @@ class Practical extends Component {
               </button>
               <button
                 onClick={() => {
-                  this.deleteJob(index);
+                  this.deleteJob(element);
                 }}
               >
                 Delete
@@ -189,9 +193,9 @@ class Practical extends Component {
     }
   };
 
-  editJob = (index) => {
+  editJob = (element) => {
     this.setState({
-      editindex: index,
+      editindex: element,
     });
     return (
       <form className="new" key={uniqid()} onSubmit={this.submitEdit}>

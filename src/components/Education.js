@@ -34,7 +34,7 @@ class Education extends Component {
       obj.title = this.state.title;
       obj.beginDate = this.state.beginDate;
       obj.endDate = this.state.endDate;
-      let array = [this.state.saved];
+      let array = this.state.saved;
       array.splice(this.state.editindex, 1, obj);
       this.setState({
         saved: array,
@@ -44,7 +44,6 @@ class Education extends Component {
         endDate: "",
         forms: [],
         educations: array.map((element) => {
-          let index = array.indexOf(element);
           return (
             <div key={uniqid()} className="edu">
               <p>
@@ -62,7 +61,7 @@ class Education extends Component {
               <button
                 onClick={() =>
                   this.setState({
-                    forms: this.editEducation(index),
+                    forms: this.editEducation(element),
                   })
                 }
               >
@@ -103,7 +102,8 @@ class Education extends Component {
     }
   };
 
-  editEducation = (index) => {
+  editEducation = (element) => {
+    let index = this.state.educations.indexOf(element);
     this.setState({
       editindex: index,
     });
@@ -160,7 +160,6 @@ class Education extends Component {
         endDate: "",
         forms: [],
         educations: array.map((element) => {
-          let index = array.indexOf(element);
           return (
             <div key={uniqid()} className="edu">
               <p>
@@ -178,7 +177,7 @@ class Education extends Component {
               <button
                 onClick={() =>
                   this.setState({
-                    forms: this.editEducation(index),
+                    forms: this.editEducation(element),
                   })
                 }
               >
