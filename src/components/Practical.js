@@ -195,7 +195,7 @@ class Practical extends Component {
     });
     return (
       <form className="new" key={uniqid()} onSubmit={this.submitEdit}>
-        <h3>Add new job</h3>
+        <h3>Edit job</h3>
         <input
           onChange={this.handleChange}
           type="text"

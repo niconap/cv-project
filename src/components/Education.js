@@ -68,7 +68,13 @@ class Education extends Component {
               >
                 Edit
               </button>
-              <button>Delete</button>
+              <button
+                onClick={() => {
+                  this.deleteEducation(element);
+                }}
+              >
+                Delete
+              </button>
             </div>
           );
         }),
@@ -82,7 +88,8 @@ class Education extends Component {
     return <p></p>;
   };
 
-  deleteEducation = (index) => {
+  deleteEducation = (element) => {
+    let index = this.state.educations.indexOf(element);
     if (this.state.educations.length !== 1) {
       this.setState({
         saved: this.state.saved.splice(index, 1),
@@ -179,7 +186,7 @@ class Education extends Component {
               </button>
               <button
                 onClick={() => {
-                  this.deleteEducation(index);
+                  this.deleteEducation(element);
                 }}
               >
                 Delete
